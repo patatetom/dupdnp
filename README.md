@@ -19,4 +19,4 @@ find /path/to/search/ -type f -not -empty -printf '%p\t%s\n' | dupdnp.py
 * `-not -empty` to consider only non-empty files,
 * `-printf '%p\t%s\n'` to print the full file name and its size in bytes, separated by a `[tab]` character.
 
-***This specific input format - `filename` `[tab]` `size` - is that expected by dupdnp !***
+***This specific input format for dupdnp - `full_file_name` `[tab]` `size_in_bytes` - is that expected !***
