@@ -1,7 +1,7 @@
 # dupdnp
 Find duplicate files
 
-Because duplicate files are usually a problem, **dupdnp**(.py) is *yet another* [Python](http://python.org/) script to find them.
+Because duplicate files are usually a problem, dupdnp.py is *yet another* [Python](http://python.org/) script to find them.
 
 The difference lies here in the way to eliminate the unique files :
 * the first sort is done very logically and as often on the file size,
@@ -23,15 +23,17 @@ find /path/to/search/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py
 * `-not -empty` to consider only non-empty files,
 * `-printf '%p\t%s\n'` to print the full file name and its size in bytes, separated by a `[tab]` character.
 
-The results of the `find` command are communicated (`|` piped) to the Python script `./dupdnp.py`.
+The results of the recursive search command are communicated (`|` piped) to the script.
 
-***This specific input format for dupdnp - `full_file_name` `[tab]` `size_in_bytes` - is the expected one !***
+***This specific input format - `full_file_name` `[tab]` `size_in_bytes` - is the expected one !***
 
 *(remeber to make the script executable with `chmod +x ./dupdnp.py`)*
 
 
 
 ### Metrics
+
+The dupdnp, [Duff](https://github.com/elmindreda/duff) and [Jdupes](https://github.com/jbruchon/jdupes) metrics listed below are issued from the search of duplicate files on a Windows Seven partition :
 
 
 
