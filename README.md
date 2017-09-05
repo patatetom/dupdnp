@@ -9,6 +9,9 @@ The difference lies here in the way to eliminate the unique files :
 * the third sort is based on the digital fingerprint of the first megabyte of the file,
 * the fourth and last sort takes place on the digital fingerprint of the file.
 
+
+## Full file name / size
+
 The search for files and their size is outsourced and entrusted here to the command-line utility [find](https://www.gnu.org/software/findutils/manual/html_mono/find.html) :
 
 ```bash
