@@ -27,7 +27,7 @@ The results of the recursive search command are communicated (`|` piped) to the 
 
 ***This specific input format - `full_file_name` `[tab]` `size_in_bytes` - is the expected one !***
 
-*(remeber to make the script executable with `chmod +x ./dupdnp.py`)*
+*(remember to make the script executable with `chmod +x ./dupdnp.py`)*
 
 
 
