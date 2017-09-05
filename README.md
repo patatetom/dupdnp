@@ -15,6 +15,6 @@ The search for files and their size is outsourced and entrusted here to the comm
 find /path/to/search/ -type f -not -empty -printf '%p\t%s\n' | dupdnp.py
 ```
 * `find /path/to/search/` to recursively search in `/path/to/search/`,
-* `-type f` to look only for files, not symlinks or diretories,
+* `-type f` to look only for files, not symlinks or directories,
 * `-not -empty` to consider only non-empty files,
 * `-printf '%p\t%s\n'` to print the file name and its size separated by a `[tab]` character *(format expected by dupdnp)*.
