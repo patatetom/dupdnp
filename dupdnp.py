@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # find /path/to/search/ -type f -not -empty -printf '%p\t%s\n' | dupdnp.py
 
@@ -64,5 +64,5 @@ for checksum, paths in checksums.items():
         for path in paths: print(path)
 
 
-# cython --embed dupdnp.py
-# gcc $( python-config --cflags --libs ) dupdnp.c -o dupdnp
+# cython3 --embed dupdnp.py
+# gcc $( python3-config --cflags --libs ) dupdnp.c -o dupdnp
