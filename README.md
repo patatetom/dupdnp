@@ -34,6 +34,15 @@ The results of the recursive search command are communicated (`|` piped) to the 
 ### Metrics
 
 The dupdnp, [Duff](https://github.com/elmindreda/duff) and [Jdupes](https://github.com/jbruchon/jdupes) metrics listed below are issued from the search of duplicate files on a typical Windows Seven workstation :
+```bash
+# as a privileged user
+mount /dev/sda2 /cdrom -o ro
+
+find /cdrom/ -type f | wc -l
+199028
+find /cdrom/ -type f -not -empty | wc -l
+196841
+```
 
 
 
