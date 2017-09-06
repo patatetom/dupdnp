@@ -53,6 +53,8 @@ real 0m10,287s user 0m1,150s sys 0m2,330s
 
 # dupdnp metrics
 time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py > dupdnp.found )
+real 23m31,677s user 3m33,160s sys 2m3,840s
+time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py > dupdnp.found )
 ```
 
 
