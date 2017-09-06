@@ -50,6 +50,9 @@ time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' > /dev/null )
 real 0m10,296s user 0m1,430s sys 0m1,970s
 time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' > /dev/null )
 real 0m10,287s user 0m1,150s sys 0m2,330s
+
+# dupdnp metrics
+time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py > dupdnp.found )
 ```
 
 
