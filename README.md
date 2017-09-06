@@ -41,6 +41,6 @@ The dupdnp, [Duff](https://github.com/elmindreda/duff) and [Jdupes](https://gith
 
 The Python script `dupdnp.py` can be compiled into an executable using [Cython](http://cython.org/) and [Gcc](https://gcc.gnu.org/) :
 ```bash
-cython3 --embed dupdnp.py
-gcc $( python3-config --cflags --libs ) dupdnp.c -o dupdnp
+cython3 --embed ./dupdnp.py
+gcc $( python3-config --cflags --libs ) ./dupdnp.c -o ./dupdnp
 ```
