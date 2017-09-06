@@ -42,6 +42,14 @@ find /cdrom/ -type f | wc -l
 199028
 find /cdrom/ -type f -not -empty | wc -l
 196841
+
+# find metrics
+time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' > /dev/null )
+real 0m10,725s user 0m1,270s sys 0m2,500s
+time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' > /dev/null )
+real 0m10,296s user 0m1,430s sys 0m1,970s
+time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' > /dev/null )
+real 0m10,287s user 0m1,150s sys 0m2,330s
 ```
 
 
