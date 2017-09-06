@@ -7,7 +7,7 @@ The difference lies here in the way to eliminate the unique files :
 * the first sort is done very logically and as often on the file size,
 * the second sort simply rests on the file header, that is, the first kilobyte,
 * the third sort is based on the [digital fingerprint](https://en.wikipedia.org/w/index.php?title=Message_digest) of the first megabyte of the file,
-* the fourth and last sort takes place on the digital fingerprint of the file.
+* the fourth and last sort takes place on the digital fingerprint of the full file.
 
 
 
@@ -33,7 +33,7 @@ The results of the recursive search command are communicated (`|` piped) to the 
 
 ### Metrics
 
-The dupdnp, [Duff](https://github.com/elmindreda/duff) and [Jdupes](https://github.com/jbruchon/jdupes) metrics listed below are issued from the search of duplicate files on a Windows Seven partition :
+The dupdnp, [Duff](https://github.com/elmindreda/duff) and [Jdupes](https://github.com/jbruchon/jdupes) metrics listed below are issued from the search of duplicate files on a typical Windows Seven workstation :
 
 
 
