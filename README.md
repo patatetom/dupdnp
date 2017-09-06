@@ -27,13 +27,13 @@ The results of the recursive search command are communicated (`|` piped) to the 
 
 ***This specific input format - `full_file_name` `[tab]` `size_in_bytes` - is the expected one !***
 
-*(remember to make the script executable with `chmod +x ./dupdnp.py`)*
+*(remember to make the script executable with `chmod +x ./dupdnp.py` or pipe to `python3 ./dupdnp.py`)*
 
 
 
 ### Metrics
 
-The dupdnp, [Duff](https://github.com/elmindreda/duff) and [Jdupes](https://github.com/jbruchon/jdupes) metrics listed below are issued from the search of duplicate files on a typical Windows Seven workstation :
+The dupdnp.py, [Duff](https://github.com/elmindreda/duff) and [Jdupes](https://github.com/jbruchon/jdupes) metrics listed below are issued from the search of duplicate files on a typical Windows Seven workstation :
 ```bash
 # as a privileged user
 mount /dev/sda2 /cdrom -o ro
@@ -51,7 +51,7 @@ real 0m10,296s user 0m1,430s sys 0m1,970s
 time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' > /dev/null )
 real 0m10,287s user 0m1,150s sys 0m2,330s
 
-# dupdnp metrics
+# dupdnp.py metrics
 time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py > dupdnp.found )
 real 23m31,677s user 3m33,160s sys 2m3,840s
 time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py > dupdnp.found )
