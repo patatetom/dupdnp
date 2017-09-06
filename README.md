@@ -11,7 +11,7 @@ The difference lies here in the way to eliminate the unique files :
 
 
 
-### Full file name / size
+### Full file name &RightArrowBar; size
 
 The search for files and their size is outsourced and entrusted here to the command-line utility [find](https://www.gnu.org/software/findutils/manual/html_mono/find.html) :
 
