@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# find /path/to/search/ -type f -not -empty -printf '%p\t%s\n' | dupdnp.py
+# find /path/to/search/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py
 
 # check size :
 # fill dict with size as key and list of paths as value
@@ -64,5 +64,5 @@ for checksum, paths in checksums.items():
         for path in paths: print(path)
 
 
-# cython3 --embed dupdnp.py
-# gcc $( python3-config --cflags --libs ) dupdnp.c -o dupdnp
+# cython3 --embed ./dupdnp.py
+# gcc $( python3-config --cflags --libs ) ./dupdnp.c -o ./dupdnp
