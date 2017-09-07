@@ -2,6 +2,8 @@
 
 # find /path/to/search/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py
 
+from hashlib import md5
+
 # check size :
 # fill dict with size as key and list of paths as value
 sizes = {}
@@ -16,7 +18,6 @@ sizes.get(0) and sizes.pop(0)
 # remove single files
 sizes = {size:paths for size, paths in sizes.items() if len(paths) > 1}
 
-
 # check header (first 1024 bytes) :
 # fill dict with (size, header) as key and list of paths as value
 headers = {}
@@ -27,10 +28,6 @@ for size, paths in sizes.items():
         headers.setdefault((size, header), []).append(path)
 # free memory
 del(sizes)
-
-
-from hashlib import md5
-
 
 # check md5 hash of extended header (first mega-byte) :
 # fill dict with (size, hash) as key and list of paths as value
@@ -44,7 +41,6 @@ for (size, header), paths in headers.items():
 # free memory
 del(headers)
 
-
 # check md5 hash :
 # fill dict with hash as key and list of paths as value
 checksums = { hheader:paths for (size, hheader), paths in hheaders.items() if size <= megabyte }
@@ -57,13 +53,11 @@ for (size, hheader), paths in hheaders.items():
 # free memory
 del(hheaders)
 
-
 # write results
 for checksum, paths in checksums.items():
     if len(paths) > 1:
         paths.pop()
         for path in paths: print(path)
-
 
 # cython3 --embed ./dupdnp.py
 # gcc $( python3-config --cflags --libs ) ./dupdnp.c -o ./dupdnp
