@@ -13,17 +13,18 @@ with open('/dev/stdin', 'r') as lines:
         sizes.setdefault(size, []).append(path)
 # remove empty files if ever
 sizes.get(0) and sizes.pop(0)
+# remove single files
+sizes = {size:paths for size, paths in sizes.items() if len(paths) > 1}
 
 
 # check header (first 1024 bytes) :
 # fill dict with (size, header) as key and list of paths as value
 headers = {}
 for size, paths in sizes.items():
-    if len(paths) > 1:
-        for path in paths:
-            with open(path, 'rb') as data:
-                header = data.read(1024)
-            headers.setdefault((size, header), []).append(path)
+    for path in paths:
+        with open(path, 'rb') as data:
+            header = data.read(1024)
+        headers.setdefault((size, header), []).append(path)
 # free memory
 del(sizes)
 
