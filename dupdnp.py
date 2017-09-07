@@ -2,7 +2,7 @@
 
 # find /path/to/search/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py
 
-from hashlib import md5
+from hashlib import md5 as message
 
 # check size :
 # fill dict sizes with size as key and list of paths as value
@@ -32,24 +32,24 @@ del(sizes)
 # remove single files
 headers = {(size, header): paths for (size, header), paths in headers.items() if len(paths) > 1}
 
-# check md5 hash of fragment :
+# check hash of fragment :
 # fill dict fragments with (size, hash) as key and list of paths as value
 fragmentWidth = 1024 * 1024 * 4
 # preload files already read (and stored in memory)
-fragments = {(size, md5(header).digest()): paths for (size, header), paths in headers.items() if size < headerWidth + 1}
+fragments = {(size, message(header).digest()): paths for (size, header), paths in headers.items() if size < headerWidth + 1}
 # remove files already read and header
 headers = {size: paths for (size, header), paths in headers.items() if size > headerWidth}
 for size, paths in headers.items():
     for path in paths:
         with open(path, 'rb') as data:
-            fragment = md5(data.read(fragmentWidth)).digest()
+            fragment = message(data.read(fragmentWidth)).digest()
         fragments.setdefault((size, fragment), []).append(path)
 # free memory
 del(headers)
 # remove single files
 fragments = {(size, fragment): paths for (size, fragment), paths in fragments.items() if len(paths) > 1}
 
-# check md5 hash :
+# check hash of totality :
 # fill dict with hash as key and list of paths as value
 # preload files already hashed (and stored in memory)
 checksums = {(size, fragment): paths for (size, fragment), paths in fragments.items() if size < fragmentWidth + 1}
@@ -58,7 +58,7 @@ fragments = {size: paths for (size, fragment), paths in fragments.items() if siz
 for size, paths in fragments.items():
     for path in paths:
         with open(path, 'rb') as data:
-            checksum = md5(data.read()).digest()
+            checksum = message(data.read()).digest()
         checksums.setdefault((size, checksum), []).append(path)
 # free memory
 del(fragments)
