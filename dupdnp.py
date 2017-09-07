@@ -49,15 +49,15 @@ fragments = {(size, fragment): paths for (size, fragment), paths in fragments.it
 
 # check md5 hash :
 # fill dict with hash as key and list of paths as value
-checksums = { hheader:paths for (size, hheader), paths in hheaders.items() if size <= megabyte }
-for (size, hheader), paths in hheaders.items():
+checksums = { fragment:paths for (size, fragment), paths in fragments.items() if size <= megabyte }
+for (size, fragment), paths in fragments.items():
     if len(paths) > 1 and size > megabyte:
         for path in paths:
             with open(path, 'rb') as data:
                 checksum = md5(data.read()).digest()
             checksums.setdefault(checksum, []).append(path)
 # free memory
-del(hheaders)
+del(fragments)
 
 # write results
 for checksum, paths in checksums.items():
