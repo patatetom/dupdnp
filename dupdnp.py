@@ -16,7 +16,7 @@ with open('/dev/stdin', 'r') as lines:
 # remove empty files if ever
 sizes.get(0) and sizes.pop(0)
 # remove single files
-sizes = {size:paths for size, paths in sizes.items() if len(paths) > 1}
+sizes = {size: paths for size, paths in sizes.items() if len(paths) > 1}
 
 # check header (first 1024 bytes) :
 # fill dict with (size, header) as key and list of paths as value
@@ -28,16 +28,17 @@ for size, paths in sizes.items():
         headers.setdefault((size, header), []).append(path)
 # free memory
 del(sizes)
+# remove single files
+headers = {(size, header): paths for (size, header), paths in headers.items() if len(paths) > 1}
 
 # check md5 hash of extended header (first mega-byte) :
 # fill dict with (size, hash) as key and list of paths as value
 hheaders, megabyte = {}, 1024*1024
 for (size, header), paths in headers.items():
-    if len(paths) > 1:
-        for path in paths:
-            with open(path, 'rb') as data:
-                hheader = md5(data.read(megabyte)).digest()
-            hheaders.setdefault((size, hheader), []).append(path)
+    for path in paths:
+        with open(path, 'rb') as data:
+            hheader = md5(data.read(megabyte)).digest()
+        hheaders.setdefault((size, hheader), []).append(path)
 # free memory
 del(headers)
 
