@@ -52,21 +52,21 @@ fragments = {(size, fragment): paths for (size, fragment), paths in fragments.it
 # check md5 hash :
 # fill dict with hash as key and list of paths as value
 # preload files already hashed (and stored in memory)
-checksums = {fragment: paths for (size, fragment), paths in fragments.items() if size < fragmentWidth + 1}
+checksums = {(size, fragment): paths for (size, fragment), paths in fragments.items() if size < fragmentWidth + 1}
 # remove files already hashed and fragment
 fragments = {size: paths for (size, fragment), paths in fragments.items() if size > fragmentWidth}
 for size, paths in fragments.items():
     for path in paths:
         with open(path, 'rb') as data:
             checksum = md5(data.read()).digest()
-        checksums.setdefault(checksum, []).append(path)
+        checksums.setdefault((size, checksum), []).append(path)
 # free memory
 del(fragments)
 # remove single files
-checksums = {checksum: paths for checksum, paths in checksums.items() if len(paths) > 1}
+checksums = {(size, checksum): paths for (size, checksum), paths in checksums.items() if len(paths) > 1}
 
 # write results
-for checksum, paths in checksums.items():
+for (size, checksum), paths in checksums.items():
     for path in paths[1:]: print(path)
 
 # cython3 --embed ./dupdnp.py
