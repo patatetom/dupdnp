@@ -38,8 +38,8 @@ fragmentWidth = 1024 * 1024 * 4
 # preload files already read (and stored in memory)
 fragments = {(size, message(header).digest()): paths for (size, header), paths in headers.items() if size < headerWidth + 1}
 # remove files already read and header
-headers = {size: paths for (size, header), paths in headers.items() if size > headerWidth}
-for size, paths in headers.items():
+headers = {(size, header): paths for (size, header), paths in headers.items() if size > headerWidth}
+for (size, header), paths in headers.items():
     for path in paths:
         with open(path, 'rb') as data:
             fragment = message(data.read(fragmentWidth)).digest()
@@ -54,8 +54,8 @@ fragments = {(size, fragment): paths for (size, fragment), paths in fragments.it
 # preload files already hashed (and stored in memory)
 checksums = {(size, fragment): paths for (size, fragment), paths in fragments.items() if size < fragmentWidth + 1}
 # remove files already hashed and fragment
-fragments = {size: paths for (size, fragment), paths in fragments.items() if size > fragmentWidth}
-for size, paths in fragments.items():
+fragments = {(size, fragment): paths for (size, fragment), paths in fragments.items() if size > fragmentWidth}
+for (size, fragment), paths in fragments.items():
     for path in paths:
         with open(path, 'rb') as data:
             checksum = message(data.read()).digest()
