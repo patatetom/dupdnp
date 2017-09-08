@@ -65,7 +65,7 @@ del(fragments)
 # remove single files
 checksums = {(size, checksum): paths for (size, checksum), paths in checksums.items() if len(paths) > 1}
 
-# write results
+# write results without first path in list
 for (size, checksum), paths in checksums.items():
     for path in paths[1:]: print(path)
 
