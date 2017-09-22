@@ -35,26 +35,22 @@ The results of the recursive search command are communicated (`|` piped) to the 
 
 The dupdnp.py metrics listed below are issued from the search of duplicate files on a typical Windows Seven workstation :
 ```bash
-# as a privileged user
-mount /dev/sda2 /cdrom -o ro
+sudo mount /dev/sda2 /cdrom -o ro
 
 find /cdrom/ -type f | wc -l
 199028
 find /cdrom/ -type f -not -empty | wc -l
 196841
 
+function flush { sync && sudo sysctl -q vm.drop_caches=3; }
+
 # find metrics
-time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' > /dev/null )
+flush && time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' > /dev/null )
 real 0m10,725s user 0m1,270s sys 0m2,500s
-time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' > /dev/null )
-real 0m10,296s user 0m1,430s sys 0m1,970s
-time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' > /dev/null )
-real 0m10,287s user 0m1,150s sys 0m2,330s
 
 # dupdnp.py metrics
-time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py > dupdnp.found )
+flush && time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py > dupdnp.found )
 real 23m31,677s user 3m33,160s sys 2m3,840s
-time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py > dupdnp.found )
 ```
 
 
