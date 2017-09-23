@@ -9,6 +9,8 @@ The difference lies here in the way to eliminate the unique files :
 * the third sort is based on the [digital fingerprint](https://en.wikipedia.org/w/index.php?title=Message_digest) of the starting fragment of the file,
 * the fourth and last sort takes place on the digital fingerprint of the full file.
 
+The digital fingerprint can be computed with [xxhash](https://github.com/Cyan4973/xxHash) (default choice if present), md5 or sha1 (default choice in the absence of xxhash).
+
 
 
 ### Full file name [&RightArrowBar;] size
