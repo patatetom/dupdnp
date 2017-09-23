@@ -66,12 +66,6 @@ find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py --sha1 | wc -l
 28950
 flush && time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py --sha1 > /dev/null )
 real 1m15,267s user 0m18,170s sys 0m6,430s
-
-# dupdnp.py metrics with sha256
-find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py --sha256 | wc -l
-28950
-flush && time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py --sha256 > /dev/null )
-real 1m30,073s user 0m34,260s sys 0m6,410s
 ```
 
 
