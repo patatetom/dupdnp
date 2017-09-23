@@ -53,7 +53,7 @@ real 0m5,089s user 0m0,150s sys 0m0,790s
 find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py | wc -l
 28950
 flush && time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py > /dev/null )
-real 1m21,556s user 0m23,680s sys 0m6,180s
+real 1m1,500s user 0m4,200s sys 0m6,770s
 
 # dupdnp.py metrics with md5
 find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py --md5 | wc -l
