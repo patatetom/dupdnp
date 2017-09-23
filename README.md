@@ -10,11 +10,11 @@ The difference lies here in the way to eliminate the unique files :
 * the third sort is based on the [digital fingerprint](https://en.wikipedia.org/w/index.php?title=Message_digest) of the starting fragment of the file,
 * the fourth and last sort takes place on the digital fingerprint of the full file.
 
-The digital fingerprint can be computed with [xxhash](https://github.com/Cyan4973/xxHash) (default choice if present), md5 or sha1 (default choice in the absence of xxhash).
+The digital fingerprint can be computed with [xxhash](https://github.com/Cyan4973/xxHash) (default choice, if present), md5 or sha1 (default choice, in absence of xxhash).
 
 
 
-### Full file name [&RightArrowBar;] size
+### Full file name &RightArrowBar; size
 
 The search for files and their size is outsourced and entrusted here to the command-line utility `find` :
 
@@ -36,7 +36,7 @@ The results of the recursive search command are communicated (`|` piped) to the 
 
 ### Metrics
 
-The dupdnp.py metrics listed below are issued from the search of duplicate files on a typical Windows Seven x64 workstation :
+The dupdnp.py metrics listed below are issued from the search of duplicate files on a typical Windows Seven workstation :
 ```bash
 sudo mount /dev/sda2 /cdrom -o ro
 
