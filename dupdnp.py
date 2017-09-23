@@ -4,15 +4,16 @@
 
 from hashlib import md5 as message
 
+from collections import defaultdict
+
 # check size :
 # fill dict sizes with size as key and list of paths as value
-sizes = {}
+sizes = defaultdict(list)
 with open('/dev/stdin', 'r') as lines:
     for line in lines:
         # line is 'path\tsize\n'
         path, size = line.strip('\n').split('\t')
-        size = int(size)
-        sizes.setdefault(size, []).append(path)
+        sizes[int(size)].append(path)
 # remove empty files if ever
 sizes.get(0) and sizes.pop(0)
 # remove single files
@@ -20,13 +21,13 @@ sizes = {size: paths for size, paths in sizes.items() if len(paths) > 1}
 
 # check header :
 # fill dict headers with (size, header) as key and list of paths as value
-headers = {}
+headers = defaultdict(list)
 headerWidth = 1024 * 4
 for size, paths in sizes.items():
     for path in paths:
         with open(path, 'rb') as data:
             header = data.read(headerWidth)
-        headers.setdefault((size, header), []).append(path)
+        headers[(size, header)].append(path)
 # free memory
 del(sizes)
 # remove single files
@@ -36,14 +37,14 @@ headers = {(size, header): paths for (size, header), paths in headers.items() if
 # fill dict fragments with (size, hash) as key and list of paths as value
 fragmentWidth = 1024 * 1024 * 4
 # preload files already read (and stored in memory)
-fragments = {(size, message(header).digest()): paths for (size, header), paths in headers.items() if size < headerWidth + 1}
+fragments = defaultdict(list, {(size, message(header).digest()): paths for (size, header), paths in headers.items() if size < headerWidth + 1})
 # remove files already read and header
 headers = {(size, header): paths for (size, header), paths in headers.items() if size > headerWidth}
 for (size, header), paths in headers.items():
     for path in paths:
         with open(path, 'rb') as data:
             fragment = message(data.read(fragmentWidth)).digest()
-        fragments.setdefault((size, fragment), []).append(path)
+        fragments[(size, fragment)].append(path)
 # free memory
 del(headers)
 # remove single files
@@ -52,14 +53,14 @@ fragments = {(size, fragment): paths for (size, fragment), paths in fragments.it
 # check hash of totality :
 # fill dict with hash as key and list of paths as value
 # preload files already hashed (and stored in memory)
-checksums = {(size, fragment): paths for (size, fragment), paths in fragments.items() if size < fragmentWidth + 1}
+checksums = defaultdict(list, {(size, fragment): paths for (size, fragment), paths in fragments.items() if size < fragmentWidth + 1})
 # remove files already hashed and fragment
 fragments = {(size, fragment): paths for (size, fragment), paths in fragments.items() if size > fragmentWidth}
 for (size, fragment), paths in fragments.items():
     for path in paths:
         with open(path, 'rb') as data:
             checksum = message(data.read()).digest()
-        checksums.setdefault((size, checksum), []).append(path)
+        checksums[(size, checksum)].append(path)
 # free memory
 del(fragments)
 # remove single files
