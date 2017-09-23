@@ -11,6 +11,7 @@ parser.add_option('-S', '--sha256', help='use sha256 instead of md5', action='st
 
 if options.sha1 and options.sha256: parser.error('--sha1 and --sha256 are mutually exclusive')
 
+from hashlib import md5 as message
 if options.sha1: from hashlib import sha1 as message
 if options.sha256: from hashlib import sha256 as message
 
