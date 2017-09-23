@@ -35,22 +35,43 @@ The results of the recursive search command are communicated (`|` piped) to the 
 
 The dupdnp.py metrics listed below are issued from the search of duplicate files on a typical Windows Seven workstation :
 ```bash
+# Windows 7 x64
 sudo mount /dev/sda2 /cdrom -o ro
 
 find /cdrom/ -type f | wc -l
-199028
+66465
 find /cdrom/ -type f -not -empty | wc -l
-196841
+66418
 
 function flush { sync && sudo sysctl -q vm.drop_caches=3; }
 
 # find metrics
 flush && time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' > /dev/null )
-real 0m10,725s user 0m1,270s sys 0m2,500s
+real 0m5,089s user 0m0,150s sys 0m0,790s
 
-# dupdnp.py metrics
-flush && time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py > dupdnp.found )
-real 23m31,677s user 3m33,160s sys 2m3,840s
+# dupdnp.py metrics with xxhash
+find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py | wc -l
+28950
+flush && time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py > /dev/null )
+real 1m21,556s user 0m23,680s sys 0m6,180s
+
+# dupdnp.py metrics with md5
+find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py --md5 | wc -l
+28950
+flush && time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py --md5 > /dev/null )
+real 1m19,165s user 0m23,700s sys 0m6,200s
+
+# dupdnp.py metrics with sha1
+find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py --sha1 | wc -l
+28950
+flush && time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py --sha1 > /dev/null )
+real 1m15,267s user 0m18,170s sys 0m6,430s
+
+# dupdnp.py metrics with sha256
+find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py --sha256 | wc -l
+28950
+flush && time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py --sha256 > /dev/null )
+real 1m30,073s user 0m34,260s sys 0m6,410s
 ```
 
 
