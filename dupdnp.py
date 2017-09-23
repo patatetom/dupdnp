@@ -4,23 +4,24 @@
 
 from optparse import OptionParser
 
-parser = OptionParser(usage='%prog [--md5|--sha1|--sha256]')
+parser = OptionParser(usage='%prog [--md5|--sha1]')
 parser.add_option('-m', '--md5', help='use md5 instead of xxhash', action='store_true')
 parser.add_option('-s', '--sha1', help='use sha1 instead of md5', action='store_true')
-parser.add_option('-S', '--sha256', help='use sha256 instead of md5', action='store_true')
 (options, _) = parser.parse_args()
 
-if (options.md5 and options.sha1) or (options.md5 and options.sha256) or (options.sha1 and options.sha256):
-    parser.error('md5, sha1 and sha256 are mutually exclusive')
+if options.md5 and options.sha1:
+    parser.error('md5 and sha1 are mutually exclusive')
 
 try:
     # pip install xxhash #--user
-    from xxhash import xxhash64 as message
-except:
-    from hashlib import md5 as message
+    from xxhash import xxh64 as message
+except ModuleNotFoundError:
+    if not options.md5 and not options.sha1:
+        from warnings import warn
+        warn('xxhash not found, switching to sha1', stacklevel=2)
+        from hashlib import sha1 as message
 if options.md5: from hashlib import md5 as message
 if options.sha1: from hashlib import sha1 as message
-if options.sha256: from hashlib import sha256 as message
 
 from collections import defaultdict
 
