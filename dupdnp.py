@@ -2,7 +2,17 @@
 
 # find /path/to/search/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py
 
-from hashlib import md5 as message
+from optparse import OptionParser
+
+parser = OptionParser(usage='%prog [--sha1|--sha256]')
+parser.add_option('-s', '--sha1', help='use sha1 instead of md5', action='store_true')
+parser.add_option('-S', '--sha256', help='use sha256 instead of md5', action='store_true')
+(options, _) = parser.parse_args()
+
+if options.sha1 and options.sha256: parser.error('--sha1 and --sha256 are mutually exclusive')
+
+if options.sha1: from hashlib import sha1 as message
+if options.sha256: from hashlib import sha256 as message
 
 from collections import defaultdict
 
