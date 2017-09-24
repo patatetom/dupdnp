@@ -4,7 +4,8 @@
 
 from optparse import OptionParser
 
-parser = OptionParser(usage='%prog [--md5|--sha1] [--h4k]')
+parser = OptionParser(usage='%prog [--all] [--md5|--sha1] [--h4k]')
+parser.add_option('-a', '--all', help='print all files', action='store_true')
 parser.add_option('-4', '--h4k', help='use 4096 bytes per headers', action='store_true')
 parser.add_option('-m', '--md5', help='use md5 instead of xxhash', action='store_true')
 parser.add_option('-s', '--sha1', help='use sha1 instead of md5', action='store_true')
@@ -88,6 +89,8 @@ checksums = {(size, checksum): paths for (size, checksum), paths in checksums.it
 
 # write results without first path in list
 for (size, checksum), paths in checksums.items():
+    if options.all:
+        paths = [None] + paths + ['']
     for path in paths[1:]: print(path)
 
 # cython3 --embed ./dupdnp.py
