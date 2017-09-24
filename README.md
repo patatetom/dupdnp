@@ -69,7 +69,7 @@ find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py --sha1 | wc -l
 flush && time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py --sha1 > /dev/null )
 real 1m15,267s user 0m18,170s sys 0m6,430s
 
-# dupdnp.py, duff and jdupes
+# dupdnp.py, duff and jdupes results
 find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py -4 -a | sed '/^$/d' | sort > dupdnp.found
 
 duff -v
@@ -79,17 +79,15 @@ duff -raqzf '' /cdrom/ | sort > duff.found
 
 jdupes -v
 jdupes 1.8 (2017-01-31) 64-bit
-Compile-time extensions: none
 ...
 jdupes -rqH /cdrom/ | sed '/^$/d' | sort > jdupes.found
 
-wc -l *.found
+wc -l *.found | grep '\.found$'
    49614 duff.found
    49614 dupdnp.found
    49614 jdupes.found
-  148842 total
 
-  md5sum *.found
+md5sum *.found
 86be9d808c1e8821bf52cd96ee581b46  duff.found
 86be9d808c1e8821bf52cd96ee581b46  dupdnp.found
 86be9d808c1e8821bf52cd96ee581b46  jdupes.found
