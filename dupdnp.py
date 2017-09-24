@@ -4,7 +4,8 @@
 
 from optparse import OptionParser
 
-parser = OptionParser(usage='%prog [--md5|--sha1]')
+parser = OptionParser(usage='%prog [--md5|--sha1] [--h4k]')
+parser.add_option('-4', '--h4k', help='use 4096 bytes per headers', action='store_true')
 parser.add_option('-m', '--md5', help='use md5 instead of xxhash', action='store_true')
 parser.add_option('-s', '--sha1', help='use sha1 instead of md5', action='store_true')
 (options, _) = parser.parse_args()
@@ -41,7 +42,7 @@ sizes = {size: paths for size, paths in sizes.items() if len(paths) > 1}
 # check header :
 # fill dict headers with (size, header) as key and list of paths as value
 headers = defaultdict(list)
-headerWidth = 1024 * 4
+headerWidth = 1024 * (options.h4k and 4 or 1)
 for size, paths in sizes.items():
     for path in paths:
         with open(path, 'rb') as data:

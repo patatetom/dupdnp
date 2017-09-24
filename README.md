@@ -49,7 +49,13 @@ real 0m5,089s user 0m0,150s sys 0m0,790s
 find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py | wc -l
 28950
 flush && time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py > /dev/null )
-real 1m1,500s user 0m4,200s sys 0m6,770s
+real 0m58,295s user 0m4,720s sys 0m7,310s
+
+# dupdnp.py metrics with xxhash and 4k headers
+find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py -4 | wc -l
+28950
+flush && time ( find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py -4 > /dev/null )
+real 0m55,900s user 0m4,910s sys 0m6,480s
 
 # dupdnp.py metrics with md5
 find /cdrom/ -type f -not -empty -printf '%p\t%s\n' | ./dupdnp.py --md5 | wc -l
