@@ -17,10 +17,10 @@ if options.md5 and options.sha1:
 try:
     # pip install xxhash #--user
     from xxhash import xxh64 as message
-except ModuleNotFoundError:
+except:
     if not options.md5 and not options.sha1:
         from warnings import warn
-        warn('xxhash not found, switching to sha1', stacklevel=2)
+        warn('switching to sha1', stacklevel=2)
         from hashlib import sha1 as message
 if options.md5: from hashlib import md5 as message
 if options.sha1: from hashlib import sha1 as message
