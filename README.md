@@ -108,6 +108,7 @@ gcc $( python3-config --cflags --libs ) ./dupdnp.c -o ./dupdnp
 ### See also
 
 - [Duff](https://github.com/elmindreda/duff)
+- [Fdupes](https://github.com/adrianlopezroche/fdupes)
 - [Jdupes](https://github.com/jbruchon/jdupes)
-- [Rmlint](https://github.com/sahib/rmlint)
 - [Rdfind](https://github.com/pauldreik/rdfind)
+- [Rmlint](https://github.com/sahib/rmlint)
